@@ -62,12 +62,11 @@
 (global-set-key [f9] 'toggle-menu-bar-mode-from-frame)
 
 (setq make-backup-files nil)
-(setq auto-save-default nil)
+;;(setq auto-save-default nil)
 
 (show-paren-mode 1)
 (column-number-mode 1)
 
-(put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -79,18 +78,6 @@
 (winner-mode 1)
 
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-
-(setq ibuffer-formats 
-      '((mark modified read-only " "
-              (name 30 30 :left :elide) ; change: 30s were originally 18s
-              " "
-              (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " " filename-and-process)
-        (mark " "
-              (name 16 -1)
-              " " filename)))
 
 (defun c-lineup-arglist-tabs-only (ignored)
   "Line up argument lists by tabs, not spaces"
@@ -146,8 +133,7 @@
 (let ((default-directory "~/.emacs.d/elpa/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(setq package-archives '(
-			 ("gnu"		.	"http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu"		.	"http://elpa.gnu.org/packages/")
 			 ("marmalade"	.	"http://marmalade-repo.org/packages/")
 			 ("melpa"	.	"http://melpa.milkbox.net/packages/")
 			 ))
@@ -165,40 +151,6 @@
 (require 'bind-key) ;; if you use :bind variant
 (setq use-package-verbose t)
 
-(use-package evil
-  :config
-  ;; (evil-define-state nocursor
-  ;;   "removing the cursor."
-  ;;   :tag "<C>"
-  ;;   :message "-- NC --"
-  ;;   :cursor nil
-  ;;   )
-  (use-package undo-tree
-    :diminish undo-tree-mode
-    :ensure t)
-  ;; (setq evil-nocursor-state-cursor nil)
-  (evil-set-initial-state 'Buffer-menu-mode     'emacs)
-  (evil-set-initial-state 'dired-mode		'emacs)
-  (evil-set-initial-state 'gdb-breakpoints-mode 'emacs)
-  (evil-set-initial-state 'gdb-frames-mode      'emacs)
-  (evil-set-initial-state 'gdb-inferior-io-mode 'emacs)
-  (evil-set-initial-state 'gdb-locals-mode      'emacs)
-  (evil-set-initial-state 'gud-mode             'emacs)
-  (evil-set-initial-state 'help-mode            'emacs)
-  (evil-set-initial-state 'ibuffer-mode		'emacs)
-  (evil-set-initial-state 'Info-mode            'emacs)
-  (evil-set-initial-state 'pdf-view-mode	'emacs)
-  (evil-set-initial-state 'makey-key-mode       'emacs)
-  (evil-set-initial-state 'Man-mode		'emacs)
-  (evil-set-initial-state 'org-mode             'emacs)
-  (evil-set-initial-state 'package-menu         'emacs)
-  (evil-set-initial-state 'term-mode            'emacs)
-  (evil-mode 1)
-  :disabled t)
-
-;;(add-hook 'pdf-view-mode-hook (lambda () (setq cursor-type nil)))
-;;(add-hook 'pdf-view-mode-hook (lambda () (blink-cursor-mode 0)))
-
 (use-package emacs-lisp
   :commands emacs-lisp-mode
   :init
@@ -213,6 +165,25 @@
       (erase-buffer)
       (eshell-send-input)))
   )
+
+(use-package hydra
+  :ensure t)
+
+(use-package swiper
+  :bind (("C-s" . swiper)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file)
+	 ("C-c C-r" . ivy-resume)
+	 )
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-height 10)
+    (setq ivy-count-format "(%d/%d) ")
+    (use-package counsel
+      :ensure t))
+  :ensure t)
 
 (use-package helm
   :init
@@ -296,9 +267,6 @@
   :init (diminish 'abbrev-mode)
   :ensure t)
 
-(use-package dired+
-  :disabled )
-
 (use-package dired-subtree
   :config
   (eval-after-load 'dired '(define-key dired-mode-map (kbd "i") 'dired-subtree-toggle))
@@ -310,14 +278,23 @@
 (use-package ibuffer
   :commands (ibuffer-mode)
   :bind ("C-x C-b" . ibuffer)
-  :config)
+  :config (setq ibuffer-formats 
+		'((mark modified read-only " "
+			(name 30 30 :left :elide) ; change: 30s were originally 18s
+			" "
+			(size 9 -1 :right)
+			" "
+			(mode 16 16 :left :elide)
+			" " filename-and-process)
+		  (mark " "
+			(name 16 -1)
+			" " filename))))
 
 (use-package tramp
   :defer t
   :config
-  (tramp-set-completion-function "ssh"
-				 '((tramp-parse-sconfig "/etc/ssh_config")
-				   (tramp-parse-sconfig "~/.ssh/config")))
+  (tramp-set-completion-function "ssh" '((tramp-parse-sconfig "/etc/ssh_config")
+					 (tramp-parse-sconfig "~/.ssh/config")))
   ;; Workaround for helm, Usage: sudo:desktop:/path/to/privliged/file
   ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:"))
   )
@@ -343,8 +320,7 @@
   (setq org-mobile-force-id-on-agenda-items nil)
   (setq org-list-allow-alphabetical t)
 
-  (setq org-src-fontify-natively t)
-  )
+  (setq org-src-fontify-natively t))
 
 (use-package ace-jump-mode
   :bind ("C-." . ace-jump-mode)
@@ -412,11 +388,9 @@
 
 (use-package yasnippet
   :defer t
-  :init
-  (add-hook 'term-mode-hook (lambda ()
-			      (setq yas-dont-activate t)))
-  :config
-  (yas-reload-all)
+  :init (add-hook 'term-mode-hook (lambda ()
+				    (setq yas-dont-activate t)))
+  :config (yas-reload-all)
   :ensure t)
 
 (use-package company
@@ -443,16 +417,14 @@
   :ensure t)
 
 (use-package powerline
-  :config
-  (powerline-default-theme)
+  :config (powerline-default-theme)
   :ensure t)
 
 (use-package smart-mode-line
   :init
   (add-hook 'after-init-hook (lambda () (sml/setup)))
-  :config
-  (use-package smart-mode-line-powerline-theme
-    :disabled t)
+  :config (use-package smart-mode-line-powerline-theme
+	    :disabled t)
   :disabled t)
 
 (use-package magit
@@ -463,37 +435,38 @@
   :commands (irony-mode)
   :init (add-hook 'c-mode-hook 'irony-mode)
   :config
-  (use-package flycheck-irony
-    :config
-    (eval-after-load 'flycheck
-      '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-    :ensure t)
-  (use-package company-irony
-    :config
-    (use-package company-irony-c-headers
+  (progn
+    (use-package flycheck-irony
+      :config
+      (eval-after-load 'flycheck
+	'(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
       :ensure t)
-    (eval-after-load 'company
-      '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
-    (add-hook 'irony-mode-hook #'yas-minor-mode)    
-    :ensure t)
-  (defun my-irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point-async)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  )
+    (use-package company-irony
+      :config
+      (use-package company-irony-c-headers
+	:ensure t)
+      (eval-after-load 'company
+	'(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
+      (add-hook 'irony-mode-hook #'yas-minor-mode)    
+      :ensure t)
+    (defun my-irony-mode-hook ()
+      (define-key irony-mode-map [remap completion-at-point]
+	'irony-completion-at-point-async)
+      (define-key irony-mode-map [remap complete-symbol]
+	'irony-completion-at-point-async))
+    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
 
 (use-package elpy
   :config
-  (add-hook 'python-mode-hook 'elpy-mode)
-  (use-package pyvenv
-    :ensure t)
-  (use-package pony-mode
-    :disabled t)
-  (use-package tern-django
-    :disabled t)
+  (progn
+    (add-hook 'python-mode-hook 'elpy-mode)
+    (use-package pyvenv
+      :ensure t)
+    (use-package pony-mode
+      :disabled t)
+    (use-package tern-django
+      :disabled t))
   :ensure t)
 
 (use-package ensime
@@ -503,80 +476,82 @@
 
 (use-package web-mode
   :mode ("\\.php\\'" . web-mode)
-  :config (defun my-web-mode-hook ()
-	    (setq web-mode-markup-indent-offset 2)
-	    (setq web-mode-code-indent-offset 4)
-	    )
-  (add-hook 'web-mode-hook 'my-web-mode-hook)
-  )
+  :config
+  (progn
+    (defun my-web-mode-hook ()
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-code-indent-offset 4))
+    (add-hook 'web-mode-hook 'my-web-mode-hook)))
 
 (use-package eclimd
   ;;:load-path "~/.emacs.d/elpa/emacs-eclim-*"
   :commands start-eclimd
   :config
-  (add-hook 'java-mode-hook #'yas-minor-mode)
-  (add-hook 'java-mode-hook 'eclim-mode)
-  (use-package eclim
-    :config
-    ;; Swap the following to change
-    ;; between AC and company mode.
-    (require 'ac-emacs-eclim-source)
-    (ac-emacs-eclim-config)
-    ;;(require 'company-emacs-eclim)
-    ;;(company-emacs-eclim-setup)
-    )
-  )
+  (progn
+    (add-hook 'java-mode-hook #'yas-minor-mode)
+    (add-hook 'java-mode-hook 'eclim-mode)
+    (use-package eclim
+      :config
+      ;; Swap the following to change
+      ;; between AC and company mode.
+      (require 'ac-emacs-eclim-source)
+      (ac-emacs-eclim-config)
+      ;;(require 'company-emacs-eclim)
+      ;;(company-emacs-eclim-setup)
+      )))
 
 (use-package js2-mode
   :mode "\\.js\\'"
   :commands js2-mode
   :config
-  (add-hook 'js2-mode-hook #'yas-minor-mode)
-  (use-package tern
-    :config
-    (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-    (use-package company-tern
+  (progn
+    (add-hook 'js2-mode-hook #'yas-minor-mode)
+    (use-package tern
       :config
-      (add-to-list 'company-backends 'company-tern)
-      (setq company-tooltip-align-annotations t)
+      (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+      (use-package company-tern
+	:config
+	(add-to-list 'company-backends 'company-tern)
+	(setq company-tooltip-align-annotations t)
+	:ensure t)
+      (use-package tern-auto-complete
+	:config
+	(defun ac-tern ()
+	  (defun toggle-completion-mode ()
+	    (company-mode -1)
+	    (auto-complete-mode 1))
+	  (add-hook 'js-mode-hook 'toggle-completion-mode)
+	  (eval-after-load 'tern
+	    '(progn
+	       (require 'tern-auto-complete)
+	       (tern-ac-setup))))
+	(ac-tern)
+	:disabled t)
       :ensure t)
-    (use-package tern-auto-complete
+    (use-package js2-refactor
       :config
-      (defun ac-tern ()
-	(defun toggle-completion-mode ()
-	  (company-mode -1)
-	  (auto-complete-mode 1))
-	(add-hook 'js-mode-hook 'toggle-completion-mode)
-	(eval-after-load 'tern
-	  '(progn
-	     (require 'tern-auto-complete)
-	     (tern-ac-setup))))
-      (ac-tern)
-      :disabled t)
-    :ensure t)
-  (use-package js2-refactor
-    :config
-    (add-hook 'js2-mode-hook #'js2-refactor-mode)
-    (js2r-add-keybindings-with-prefix "C-c C-m")
-    (use-package discover-js2-refactor
+      (add-hook 'js2-mode-hook #'js2-refactor-mode)
+      (js2r-add-keybindings-with-prefix "C-c C-m")
+      (use-package discover-js2-refactor
+	:ensure t)
       :ensure t)
-    :ensure t)
-  (use-package js2-highlight-vars
-    :config
-    (add-hook 'js2-mode-hook 'js2-highlight-vars-mode)
-    :disabled t)
+    (use-package js2-highlight-vars
+      :config
+      (add-hook 'js2-mode-hook 'js2-highlight-vars-mode)
+      :disabled t))
   :ensure t)
 
 (use-package skewer-mode
   :commands (skewer-mode skewer-html-mode skewer-css-mode)
   :config
-  (use-package simple-httpd
-    :commands httpd-start
-    :config
-    (setq httpd-root "/home/ben/scratch/skewer")
-    :ensure t)
-  (use-package js2-mode
-    :ensure t)
+  (progn
+    (use-package simple-httpd
+      :commands httpd-start
+      :config
+      (setq httpd-root "/home/ben/scratch/skewer")
+      :ensure t)
+    (use-package js2-mode
+      :ensure t))
   :ensure t)
 
 (use-package pkgbuild-mode
@@ -584,23 +559,22 @@
 
 (use-package shackle
   :config
-  (setq helm-display-function #'pop-to-buffer)
-  (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.46)))
-  (shackle-mode)
+  (progn
+    (setq helm-display-function #'pop-to-buffer)
+    (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.46)))
+    (shackle-mode))
   :ensure t)
 
 (use-package auctex
   :commands auctex
   :init
-  (add-hook 'TeX-mode-hook #'yas-minor-mode)
-  (add-hook 'TeX-mode-hook 'company-mode)
-  :config
-  (use-package company-auctex
-    :config
-    (company-auctex-init)
-    :ensure t)
-  :disabled t
-  )
+  (progn
+    (add-hook 'TeX-mode-hook #'yas-minor-mode)
+    (add-hook 'TeX-mode-hook 'company-mode))
+  :config (use-package company-auctex
+	    :config (company-auctex-init)
+	    :ensure t)
+  :disabled t)
 
 (use-package edit-server
   :defer t
@@ -613,12 +587,13 @@
   :init
   ;; The following works around theme color issues in a deamon/client configuration
   ;; Source: https://www.reddit.com/r/emacs/comments/3a5kim/emacsclient_does_not_respect_themefont_setting/
-  (defun load-material-theme (frame)
-    (select-frame frame)
-    (load-theme 'material t))
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions #'load-material-theme)
-    (load-theme 'material t))
+  (progn
+    (defun load-material-theme (frame)
+      (select-frame frame)
+      (load-theme 'material t))
+    (if (daemonp)
+	(add-hook 'after-make-frame-functions #'load-material-theme)
+      (load-theme 'material t)))
   :ensure t)
 
 (use-package monokai-theme
