@@ -14,9 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(custom-enabled-themes (quote (material)))
- '(custom-safe-themes
-   (quote
-    ("eafda598b275a9d68cc1fbe1689925f503cab719ee16be23b10a9f2cc5872069" "21c149e080d562fe9169c8abda51c2f1f9b0a12c89cc2c7a4d9998a758e1cfbd" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "d1dbb3c37e11ae8f986ca2d4b6a9d78bb1915fe66f3a6ffab1397cc746c18cba")))
+ '(custom-safe-themes t)
  '(explicit-shell-file-name "/bin/zsh")
  '(helm-external-programs-associations
    (quote
@@ -42,7 +40,7 @@
   (interactive)
   (save-some-buffers)
   (delete-frame)
-  (shell-command "systemctl --user restart emacs &")
+  ;; TODO DONOT TODO DONOT
   )
 
 (defun stop-systemd-emacs ()
@@ -125,13 +123,13 @@
 
 ;;; Use-package management configuration
 
+(let ((default-directory "~/.emacs.d/elpa/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
 (require 'package)
 (setq package-enable-at-startup nil)
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp")
-
-(let ((default-directory "~/.emacs.d/elpa/"))
-  (normal-top-level-add-subdirs-to-load-path))
 
 (setq package-archives '(("gnu"		.	"http://elpa.gnu.org/packages/")
 			 ("marmalade"	.	"http://marmalade-repo.org/packages/")
@@ -140,11 +138,14 @@
 
 (package-initialize)
 
-(if (not (package-installed-p 'use-package))
-    (progn
-      (package-refresh-contents)
-      (package-install 'use-package))
-  )
+;; (if (not (package-installed-p 'use-package))
+;;     (progn
+;;       (package-refresh-contents)
+;;       (package-install 'use-package))
+;;   )
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 (eval-when-compile
   (require 'use-package))
 (require 'diminish) ;; if you use :diminish
@@ -170,6 +171,7 @@
   :ensure t)
 
 (use-package swiper
+  :init (ivy-mode 1)
   :bind (("C-s" . swiper)
 	 ("M-x" . counsel-M-x)
 	 ("C-x C-f" . counsel-find-file)
@@ -177,7 +179,6 @@
 	 )
   :config
   (progn
-    (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
     (setq ivy-height 10)
     (setq ivy-count-format "(%d/%d) ")
@@ -217,39 +218,6 @@
     :ensure t)
   (use-package helm-firefox
     :commands helm-firefox-bookmarks
-    :disabled t)
-  :disabled t)
-
-(use-package ido
-  :config
-  (ido-mode 1)
-  (ido-everywhere t)
-  ;; Match characters if string doesn't match
-  (setq ido-enable-flex-matching t)
-  ;; Auto-search delay
-  ;;(setq ido-auto-merge-delay-time 10)
-  ;; Disable ido auto-search file
-  ;;(setq ido-auto-merge-work-directories-length -1)
-  (use-package ido-ubiquitous
-    :config (ido-ubiquitous-mode 1)
-    :ensure t)
-  (use-package smex
-    :bind ("M-x" . smex)
-    :ensure t)
-  (use-package ido-vertical-mode
-    :config
-    (ido-vertical-mode 1)
-    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-    ;;(setq ido-vertical-show-count t)
-    :ensure t)
-  (use-package flx-ido
-    :config
-    ;; disable ido faces to see flx highlights.
-    (setq ido-use-faces nil)
-    (flx-ido-mode 1)
-    :ensure t)
-  (use-package browse-kill-ring
-    :bind ("M-y" . browse-kill-ring)
     :disabled t)
   :disabled t)
 
@@ -293,11 +261,12 @@
 (use-package tramp
   :defer t
   :config
-  (tramp-set-completion-function "ssh" '((tramp-parse-sconfig "/etc/ssh_config")
-					 (tramp-parse-sconfig "~/.ssh/config")))
-  ;; Workaround for helm, Usage: sudo:desktop:/path/to/privliged/file
-  ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:"))
-  )
+  (progn (tramp-set-completion-function "ssh" '((tramp-parse-sconfig "/etc/ssh_config")
+						(tramp-parse-sconfig "~/.ssh/config")))
+	 ;; Workaround for helm, Usage: sudo:desktop:/path/to/privliged/file
+	 ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:")))
+	 
+	 ))
 
 (use-package org
   :commands (org-mode org-agenda)
@@ -458,6 +427,7 @@
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
 
 (use-package elpy
+  :commands (elpy-mode)
   :config
   (progn
     (add-hook 'python-mode-hook 'elpy-mode)
@@ -563,7 +533,7 @@
     (setq helm-display-function #'pop-to-buffer)
     (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.46)))
     (shackle-mode))
-  :ensure t)
+  :disabled t)
 
 (use-package auctex
   :commands auctex
@@ -617,4 +587,4 @@
   :ensure t)
 
 (provide '.emacs)
-;;; .emacs ends here
+;;; .init.el ends here
