@@ -40,7 +40,7 @@
   (interactive)
   (save-some-buffers)
   (delete-frame)
-  ;; TODO DONOT TODO DONOT
+  ;; TODO
   )
 
 (defun stop-systemd-emacs ()
