@@ -10,7 +10,7 @@
 /.org-id-locations
 /.mc-lists.el
 /projectile-bookmarks.eld
-/recentf
+*recentf*
 /smex-items
 /session.*
 /tramp

@@ -433,9 +433,9 @@
 
 (use-package elpy
   :commands (elpy-mode)
+  :init (add-hook 'python-mode-hook 'elpy-mode)
   :config
   (progn
-    (add-hook 'python-mode-hook 'elpy-mode)
     (use-package pyvenv
       :ensure t)
     (use-package pony-mode
