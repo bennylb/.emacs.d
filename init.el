@@ -159,6 +159,7 @@
   )
 
 (use-package eshell
+  :commands (eshell eshell-mode)
   :config
   (defun eshell/clear ()
     "Clear the eshell buffer."
@@ -167,7 +168,11 @@
       (eshell-send-input)))
   )
 
+(use-package pinentry
+  :disabled t)
+
 (use-package hydra
+  :commands (hydra)
   :ensure t)
 
 (use-package swiper
@@ -525,6 +530,7 @@
   :ensure t)
 
 (use-package pkgbuild-mode
+  :mode ("\\PKGBUILD\\'" . pkgbuild-mode)
   :ensure t)
 
 (use-package shackle
