@@ -249,7 +249,7 @@
   :ensure t)
 
 (use-package ibuffer
-  :commands (ibuffer-mode)
+  :defer t
   :bind ("C-x C-b" . ibuffer)
   :config (setq ibuffer-formats 
 		'((mark modified read-only " "
@@ -281,10 +281,6 @@
 			  "~/Sync/Drop_Box/Org/Personal.org"
 			  "~/Uni/Uni.org"
 			  "~/Uni/Sem2-2015/Sem2-2015.org"
-			  "~/Uni/Sem2-2015/COSC1114-OSP/COSC1114-OSP.org"
-			  "~/Uni/Sem2-2015/ISYS1108-SEPM/ISYS1108-SEPM.org"
-			  "~/Uni/Sem2-2015/COSC2123-AA/COSC2123-AA.org"
-			  "~/Uni/Sem2-2015/COSC2536-SCIT/COSC2536-SCIT.org"
 			  ))
   (setq org-directory "~/Sync/Drop_Box/Org")
   (setq org-mobile-directory "~/Sync/Drop_Box/MobileOrg")
@@ -362,8 +358,9 @@
 
 (use-package yasnippet
   :defer t
-  :init (add-hook 'term-mode-hook (lambda ()
-				    (setq yas-dont-activate t)))
+  :init
+  (progn  (add-hook 'term-mode-hook (lambda ()
+				      (setq yas-dont-activate t))))
   :config (yas-reload-all)
   :ensure t)
 
@@ -384,6 +381,12 @@
 (use-package auto-complete
   ;;:config (ac-config-default) 
   :ensure t)
+
+(defun toggle-completion-mode ()
+  "Toggle/switch/swap from company to auto-complete mode"
+  (interactive)
+  (company-mode -1)
+  (auto-complete-mode 1))
 
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
@@ -450,13 +453,17 @@
   :disabled t)
 
 (use-package web-mode
-  :mode ("\\.php\\'" . web-mode)
+  :mode (("\\.php\\'" . web-mode)
+	 ("\\.html\\'" . web-mode))
   :config
   (progn
     (defun my-web-mode-hook ()
       (setq web-mode-markup-indent-offset 2)
       (setq web-mode-code-indent-offset 4))
-    (add-hook 'web-mode-hook 'my-web-mode-hook)))
+    (add-hook 'web-mode-hook 'my-web-mode-hook)
+    (add-hook 'web-mode-hook 'toggle-completion-mode)
+    )
+  :ensure t)
 
 (use-package eclimd
   ;;:load-path "~/.emacs.d/elpa/emacs-eclim-*"
@@ -492,9 +499,6 @@
       (use-package tern-auto-complete
 	:config
 	(defun ac-tern ()
-	  (defun toggle-completion-mode ()
-	    (company-mode -1)
-	    (auto-complete-mode 1))
 	  (add-hook 'js-mode-hook 'toggle-completion-mode)
 	  (eval-after-load 'tern
 	    '(progn
@@ -588,6 +592,7 @@
   :disabled t)
 
 (use-package pdf-tools
+  :if (eq system-type 'gnu/linux)
   :commands (pdf-view-mode)
   :init (pdf-tools-install)
   :ensure t)
