@@ -177,10 +177,18 @@
 
 (use-package swiper
   :init (ivy-mode 1)
-  :bind (("C-s" . swiper)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("C-c C-r" . ivy-resume)
+  :bind (("C-s"		.	swiper)
+	 ("C-c C-r"	.	ivy-resume)
+	 ("<f6>"	.	ivy-resume)
+	 ("M-x"		.	counsel-M-x)
+	 ("C-x C-f"	.	counsel-find-file)
+	 ("<f1> f"	.	counsel-describe-function)
+	 ("<f1> v"	.	counsel-describe-variable)
+	 ("<f1> l"	.	counsel-load-library)
+	 ("<f2> i"	.	counsel-info-lookup-symbol)
+	 ("<f2> u"	.	counsel-unicode-char)
+	 ("C-c g"	.	counsel-git)
+	 ("C-c j"	.	counsel-git-grep)
 	 )
   :config
   (progn
@@ -195,11 +203,11 @@
   :init
   (helm-mode 1)
   :diminish helm-mode
-  :bind (("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)
-	 ("C-x b" . helm-mini)
-	 ("M-y" . helm-show-kill-ring)
-	 ("C-x r b" . helm-filtered-bookmarks)
+  :bind (("M-x"		.	helm-M-x)
+	 ("C-x C-f"	.	helm-find-files)
+	 ("C-x b"	.	helm-mini)
+	 ("M-y"		.	helm-show-kill-ring)
+	 ("C-x r b"	.	helm-filtered-bookmarks)
 	 )
   :config
   (progn
