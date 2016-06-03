@@ -193,7 +193,7 @@
   :config
   (progn
     (setq ivy-use-virtual-buffers t)
-    (setq ivy-height 10)
+    (setq ivy-height 15)
     (setq ivy-count-format "(%d/%d) ")
     (use-package counsel
       :ensure t))
@@ -242,7 +242,7 @@
     (setq projectile-completion-system 'helm)
     (helm-projectile-on)
     :ensure t)
-  :ensure t)
+  :disabled t)
 
 (use-package diminish
   :init (diminish 'abbrev-mode)
