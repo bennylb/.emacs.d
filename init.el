@@ -195,6 +195,7 @@
     (setq ivy-use-virtual-buffers t)
     (setq ivy-height 15)
     (setq ivy-count-format "(%d/%d) ")
+    (setq projectile-completion-system 'ivy)
     (use-package counsel
       :ensure t))
   :ensure t)
@@ -223,8 +224,8 @@
     ;;   (define-key helm-map (kbd "C-q")
     ;;     (lambda () (interactive)
     ;;       (helm-quit-and-execute-action 'old-ff))))
+    (setq projectile-completion-system 'helm)
     )
-  
   (use-package helm-descbinds
     :commands (helm-descbinds helm-descbinds-mode)
     :config (helm-descbinds-mode)
@@ -239,7 +240,6 @@
   :config
   (use-package helm-projectile
     :config
-    (setq projectile-completion-system 'helm)
     (helm-projectile-on)
     :ensure t)
   :disabled t)
