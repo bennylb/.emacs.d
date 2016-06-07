@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: HTML new tab anchor
+# key: nta
+# binding: direct-keybinding
+# --
+<a href="${1:url}" target="_blank">${2:link name}</a>$0
