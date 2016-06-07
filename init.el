@@ -188,7 +188,7 @@
 	 ("<f2> u"	.	counsel-unicode-char)
 	 ("C-c g"	.	counsel-git)
 	 ("C-c j"	.	counsel-git-grep)
-	 ("C-M-n"^)
+	 ;; TODO bind ‘C-M-n’ (‘ivy-next-line-and-call’)
 	 )
   :config
   (progn
