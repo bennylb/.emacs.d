@@ -425,8 +425,9 @@
 (use-package smart-mode-line
   :init
   (add-hook 'after-init-hook (lambda () (sml/setup)))
-  :config (use-tapackage smart-mode-line-powerline-theme
-	    :disabled t)
+  :config
+  (use-package smart-mode-line-powerline-theme
+    :disabled t)
   :disabled t)
 
 (use-package magit
