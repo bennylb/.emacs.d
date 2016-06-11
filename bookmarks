@@ -1,0 +1,12 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("(emacs) Inserting Text"
+ (front-context-string . "   To insert a n")
+ (rear-context-string . "ter code 127).\n\n")
+ (position . 88764)
+ (filename . "/usr/share/info/emacs")
+ (info-node . "Inserting Text")
+ (handler . Info-bookmark-jump))
+)

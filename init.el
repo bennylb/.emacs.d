@@ -39,8 +39,9 @@
   (interactive)
   (save-some-buffers)
   (delete-frame)
-  ;; TODO
-  )
+  (if (daemonp)
+      (call-process-shell-command "/usr/bin/systemctl --user restart emacs &")
+      ))
 
 (defun stop-systemd-emacs ()
   "Stop emacs systemd daemon"
@@ -130,10 +131,10 @@
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp")
 
-(setq package-archives '(("gnu"		.	"http://elpa.gnu.org/packages/")
-			 ("marmalade"	.	"http://marmalade-repo.org/packages/")
-			 ("melpa"	.	"http://melpa.milkbox.net/packages/")
-			 ))
+(setq package-archives '(("gnu"		 .	"https://elpa.gnu.org/packages/")
+			 ;;("marmalade"	 .	"https://marmalade-repo.org/packages/")
+			 ("melpa"	 .	"https://melpa.milkbox.net/packages/")
+			 ("melpa-stable" .	"https://stable.melpa.org/packages/")))
 
 (package-initialize)
 
@@ -189,6 +190,7 @@
 	 ("C-c g"	.	counsel-git)
 	 ("C-c j"	.	counsel-git-grep)
 	 ;; TODO bind ‘C-M-n’ (‘ivy-next-line-and-call’)
+	 ;;("C-M-n"	.	ivy-next-line-and-call)
 	 )
   :config
   (progn
@@ -197,6 +199,8 @@
     (setq ivy-count-format "(%d/%d) ")
     (setq projectile-completion-system 'ivy)
     (use-package counsel
+      :ensure t)
+    (use-package ivy-hydra
       :ensure t))
   :ensure t)
 
@@ -401,6 +405,19 @@
   :config (volatile-highlights-mode t)
   :ensure t)
 
+(use-package highlight-indentation
+  :commands highlight-indentation-mode
+  :config
+  (progn
+    ;; Add hooks here
+    )
+  :ensure t)
+
+(use-package auto-highlight-symbol
+  :bind (("<f3>"		.	ahs-forward)
+	 ("S-<f3>"		.	ahs-backward))
+  :ensure t)
+
 (use-package powerline
   :config (powerline-default-theme)
   :ensure t)
@@ -408,12 +425,17 @@
 (use-package smart-mode-line
   :init
   (add-hook 'after-init-hook (lambda () (sml/setup)))
-  :config (use-package smart-mode-line-powerline-theme
+  :config (use-tapackage smart-mode-line-powerline-theme
 	    :disabled t)
   :disabled t)
 
 (use-package magit
   :bind ("C-x g" . magit-status)
+  :ensure t
+  :pin melpa-stable)
+
+(use-package gitignore-mode
+  :commands gitignore-mode
   :ensure t)
 
 (use-package irony
