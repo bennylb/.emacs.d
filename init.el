@@ -14,7 +14,6 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (material)))
  '(custom-safe-themes t)
- '(explicit-shell-file-name "/bin/zsh")
  '(helm-external-programs-associations
    (quote
     (("ods" . "localc")
