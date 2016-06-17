@@ -408,7 +408,7 @@
   :commands highlight-indentation-mode
   :config
   (progn
-    ;; Add hooks here
+    ;; TODO Add hooks here
     )
   :ensure t)
 
