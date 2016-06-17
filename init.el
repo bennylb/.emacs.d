@@ -418,17 +418,12 @@
 	 ("S-<f3>"		.	ahs-backward))
   :ensure t)
 
-(use-package powerline
-  :config (powerline-default-theme)
-  :ensure t)
-
-(use-package smart-mode-line
-  :init
-  (add-hook 'after-init-hook (lambda () (sml/setup)))
+(use-package spaceline
   :config
-  (use-package smart-mode-line-powerline-theme
-    :disabled t)
-  :disabled t)
+  (progn
+    (require 'spaceline-config)
+    (spaceline-emacs-theme))
+  :ensure t)
 
 (use-package magit
   :bind ("C-x g" . magit-status)
