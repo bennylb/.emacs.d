@@ -167,6 +167,9 @@
       (eshell-send-input)))
   )
 
+(use-package info+
+  :ensure t)
+
 (use-package pinentry
   :disabled t)
 
