@@ -424,7 +424,8 @@
   :config
   (progn
     (require 'spaceline-config)
-    (spaceline-emacs-theme))
+    (spaceline-emacs-theme)
+    (add-hook 'Info-mode-hook 'spaceline-info-mode))
   :ensure t)
 
 (use-package magit
