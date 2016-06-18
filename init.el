@@ -618,11 +618,15 @@
       (load-theme 'material t)))
   :ensure t)
 
-(use-package monokai-theme
+(use-package badwolf-theme
   :defer t
   :ensure t)
 
-(use-package solarized-theme
+(use-package aurora-theme
+  :defer t
+  :ensure t)
+
+(use-package monokai-theme
   :defer t
   :ensure t)
 
