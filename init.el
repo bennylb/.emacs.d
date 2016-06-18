@@ -432,6 +432,8 @@
 (use-package spaceline
   :config
   (progn
+    (use-package powerline
+      :ensure t)
     (require 'spaceline-config)
     (spaceline-emacs-theme)
     (add-hook 'Info-mode-hook 'spaceline-info-mode))
