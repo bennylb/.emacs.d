@@ -178,32 +178,42 @@
   :ensure t)
 
 (use-package swiper
-  :init (ivy-mode 1)
-  :bind (("C-s"		.	swiper)
-	 ("C-c C-r"	.	ivy-resume)
-	 ("<f6>"	.	ivy-resume)
-	 ("M-x"		.	counsel-M-x)
-	 ("C-x C-f"	.	counsel-find-file)
-	 ("<f1> f"	.	counsel-describe-function)
-	 ("<f1> v"	.	counsel-describe-variable)
-	 ("<f1> l"	.	counsel-load-library)
-	 ("<f2> i"	.	counsel-info-lookup-symbol)
-	 ("<f2> u"	.	counsel-unicode-char)
-	 ("C-c g"	.	counsel-git)
-	 ("C-c j"	.	counsel-git-grep)
-	 ;; TODO bind ‘C-M-n’ (‘ivy-next-line-and-call’)
-	 ;;("C-M-n"	.	ivy-next-line-and-call)
-	 )
-  :config
-  (progn
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-height 15)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq projectile-completion-system 'ivy)
-    (use-package counsel
+  :bind
+  (("C-s"		.	swiper))
+  :init
+  (use-package ivy
+    :bind
+    (("C-c C-r"		.	ivy-resume)
+     ("<f6>"		.	ivy-resume)
+     ;; TODO bind ‘C-M-n’ (‘ivy-next-line-and-call’)
+     ;;("C-M-n"	.	ivy-next-line-and-call)
+     )
+    :init (ivy-mode 1)
+    :config
+    (progn
+      (setq ivy-use-virtual-buffers t)
+      (setq ivy-height 15)
+      (setq ivy-count-format "(%d/%d) ")
+      (setq projectile-completion-system 'ivy)
+      (use-package ivy-hydra
+	:ensure t))
+    :ensure t)
+  (use-package counsel
+    :bind
+    (("M-x"		.	counsel-M-x)
+     ("C-x C-f"		.	counsel-find-file)
+     ("<f1> f"		.	counsel-describe-function)
+     ("<f1> v"		.	counsel-describe-variable)
+     ("<f1> l"		.	counsel-load-library)
+     ("<f2> i"		.	counsel-info-lookup-symbol)
+     ("<f2> u"		.	counsel-unicode-char)
+     ("C-c g"		.	counsel-git)
+     ("C-c j"		.	counsel-git-grep))
+    :config
+    (use-package counsel-projectile
+      :commands counsel-projectile
       :ensure t)
-    (use-package ivy-hydra
-      :ensure t))
+    :ensure t)
   :ensure t)
 
 (use-package helm
