@@ -601,9 +601,11 @@
   :disabled t)
 
 (use-package leuven-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package material-theme
+  :defer t
   :init
   ;; The following works around theme color issues in a deamon/client configuration
   ;; Source: https://www.reddit.com/r/emacs/comments/3a5kim/emacsclient_does_not_respect_themefont_setting/
@@ -617,19 +619,24 @@
   :ensure t)
 
 (use-package monokai-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package solarized-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package soothe-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package flatland-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package gruvbox-theme
-  :disabled t)
+  :defer t
+  :ensure t)
 
 (use-package pdf-tools
   :if (eq system-type 'gnu/linux)
