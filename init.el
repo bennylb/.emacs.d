@@ -79,32 +79,32 @@
 (defun c-lineup-arglist-tabs-only (ignored)
   "Line up argument lists by tabs, not spaces"
   (let* ((anchor (c-langelem-pos c-syntactic-element))
-         (column (c-langelem-2nd-pos c-syntactic-element))
-         (offset (- (1+ column) anchor))
-         (steps (floor offset c-basic-offset)))
+	 (column (c-langelem-2nd-pos c-syntactic-element))
+	 (offset (- (1+ column) anchor))
+	 (steps (floor offset c-basic-offset)))
     (* (max steps 1)
        c-basic-offset)))
 
 (add-hook 'c-mode-common-hook
-          (lambda ()
-            ;; Add kernel style
-            (c-add-style
-             "linux-tabs-only"
-             '("linux" (c-offsets-alist
-                        (arglist-cont-nonempty
-                         c-lineup-gcc-asm-reg
-                         c-lineup-arglist-tabs-only))))))
+	  (lambda ()
+	    ;; Add kernel style
+	    (c-add-style
+	     "linux-tabs-only"
+	     '("linux" (c-offsets-alist
+			(arglist-cont-nonempty
+			 c-lineup-gcc-asm-reg
+			 c-lineup-arglist-tabs-only))))))
 
 (add-hook 'c-mode-hook
-          (lambda ()
-            (let ((filename (buffer-file-name)))
-              ;; Enable kernel mode for the appropriate files
-              (when (and filename
-                         (string-match (expand-file-name "~/src/linux-trees")
-                                       filename))
-                (setq indent-tabs-mode t)
-                (setq show-trailing-whitespace t)
-                (c-set-style "linux-tabs-only")))))
+	  (lambda ()
+	    (let ((filename (buffer-file-name)))
+	      ;; Enable kernel mode for the appropriate files
+	      (when (and filename
+			 (string-match (expand-file-name "~/src/linux-trees")
+				       filename))
+		(setq indent-tabs-mode t)
+		(setq show-trailing-whitespace t)
+		(c-set-style "linux-tabs-only")))))
 
 
 ;;; Formatting
@@ -225,8 +225,8 @@
     ;;   (defun old-ff (&optional no-op) (interactive)
     ;;          (call-interactively 'find-file))
     ;;   (helm-add-action-to-source "Fallback find-file"
-    ;; 			       'old-ff
-    ;; 			       helm-source-find-files)
+    ;;			       'old-ff
+    ;;			       helm-source-find-files)
     ;;   (define-key helm-map (kbd "C-q")
     ;;     (lambda () (interactive)
     ;;       (helm-quit-and-execute-action 'old-ff))))
@@ -265,7 +265,7 @@
 (use-package ibuffer
   :defer t
   :bind ("C-x C-b" . ibuffer)
-  :config (setq ibuffer-formats 
+  :config (setq ibuffer-formats
 		'((mark modified read-only " "
 			(name 30 30 :left :elide) ; change: 30s were originally 18s
 			" "
@@ -284,7 +284,6 @@
 						(tramp-parse-sconfig "~/.ssh/config")))
 	 ;; Workaround for helm, Usage: sudo:desktop:/path/to/privliged/file
 	 ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:")))
-	 
 	 ))
 
 (use-package org
@@ -393,7 +392,7 @@
   :ensure t)
 
 (use-package auto-complete
-  ;;:config (ac-config-default) 
+  ;;:config (ac-config-default)
   :ensure t)
 
 (defun toggle-completion-mode ()
@@ -453,7 +452,7 @@
 	:ensure t)
       (eval-after-load 'company
 	'(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
-      (add-hook 'irony-mode-hook #'yas-minor-mode)    
+      (add-hook 'irony-mode-hook #'yas-minor-mode)
       :ensure t)
     (defun my-irony-mode-hook ()
       (define-key irony-mode-map [remap completion-at-point]
