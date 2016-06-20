@@ -12,7 +12,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;'(custom-enabled-themes (quote (aurora)))
  '(custom-safe-themes t)
  '(helm-external-programs-associations
    (quote
@@ -617,39 +616,33 @@
   :defer t
   :disabled t)
 
+;; The following works around theme color issues in a deamon/client configuration
+;; Source: https://www.reddit.com/r/emacs/comments/3a5kim/emacsclient_does_not_respect_themefont_setting/
+(defvar my-custom-theme nil)
+(setq my-custom-theme 'aurora)
+
+(defun my-load-theme (frame)
+  (select-frame frame)
+  (load-theme my-custom-theme t))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions 'my-load-theme)
+  (load-theme my-custom-theme t))
+
 (use-package leuven-theme
   :defer t
   :ensure t)
 
 (use-package material-theme
   :defer t
-  :init
-  ;; The following works around theme color issues in a deamon/client configuration
-  ;; Source: https://www.reddit.com/r/emacs/comments/3a5kim/emacsclient_does_not_respect_themefont_setting/
-  (progn
-    (defun load-material-theme (frame)
-      (select-frame frame)
-      (load-theme 'material t))
-    (if (daemonp)
-	(add-hook 'after-make-frame-functions #'load-material-theme)
-      (load-theme 'material t)))
-  :disabled t)
+  :ensure t)
 
 (use-package badwolf-theme
   :defer t
   :ensure t)
 
-(defun my-load-theme (theme)
-  (select-frame frame)
-  (load-theme 'material t))
-
 (use-package aurora-theme
   :defer t
-  ;; :config
-  ;; (progn
-  ;;   (if (daemonp)
-  ;; 	(add-hook 'after-make-frame-functions )
-  ;;     ))o
   :ensure t)
 
 (use-package monokai-theme
