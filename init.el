@@ -12,7 +12,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (material)))
+ ;;'(custom-enabled-themes (quote (aurora)))
  '(custom-safe-themes t)
  '(helm-external-programs-associations
    (quote
@@ -633,14 +633,23 @@
     (if (daemonp)
 	(add-hook 'after-make-frame-functions #'load-material-theme)
       (load-theme 'material t)))
-  :ensure t)
+  :disabled t)
 
 (use-package badwolf-theme
   :defer t
   :ensure t)
 
+(defun my-load-theme (theme)
+  (select-frame frame)
+  (load-theme 'material t))
+
 (use-package aurora-theme
   :defer t
+  ;; :config
+  ;; (progn
+  ;;   (if (daemonp)
+  ;; 	(add-hook 'after-make-frame-functions )
+  ;;     ))o
   :ensure t)
 
 (use-package monokai-theme
