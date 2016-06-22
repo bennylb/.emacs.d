@@ -627,10 +627,8 @@
   :defer t
   :disabled t)
 
-;; The following works around theme color issues in a deamon/client configuration
-;; Source: https://www.reddit.com/r/emacs/comments/3a5kim/emacsclient_does_not_respect_themefont_setting/
 (defvar my-custom-theme nil)
-(setq my-custom-theme 'aurora)
+(setq my-custom-theme 'material)
 
 (defun my-load-theme (frame)
   (select-frame frame)
@@ -648,7 +646,7 @@
   :defer t
   :ensure t)
 
-(use-package badwolf-theme
+(use-package monokai-theme
   :defer t
   :ensure t)
 
@@ -656,7 +654,11 @@
   :defer t
   :ensure t)
 
-(use-package monokai-theme
+(use-package spacemacs-theme
+  :defer t
+  :ensure t)
+
+(use-package badwolf-theme
   :defer t
   :ensure t)
 
