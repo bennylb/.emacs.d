@@ -312,6 +312,15 @@
 	 ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:")))
 	 ))
 
+(use-package term
+  :commands (term ansi-term)
+  :config
+  (progn
+    (add-hook 'term-mode-hook (lambda () (company-mode -1)))
+    (defun autopair-mode-disable ()
+      (autopair-mode -1))
+    (add-hook 'term-mode-hook 'autopair-mode-disable)))
+
 (use-package org
   :commands (org-mode org-agenda)
   :config
@@ -383,7 +392,9 @@
 
 (use-package autopair
   :diminish (autopair-mode)
-  :config (autopair-global-mode)
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'autopair-mode))
   :ensure t)
 
 (use-package expand-region
@@ -398,15 +409,15 @@
 (use-package yasnippet
   :defer t
   :init
-  (progn  (add-hook 'term-mode-hook (lambda ()
-				      (setq yas-dont-activate t))))
+  (progn
+    (add-hook 'term-mode-hook
+	      (lambda () (setq yas-dont-activate t))))
   :config (yas-reload-all)
   :ensure t)
 
 (use-package company
   :init
   (add-hook 'after-init-hook 'global-company-mode)
-  ;;(add-hook 'term-mode-hook (lambda () (company-mode -1)))
   :config
   (use-package company-quickhelp
     :config (company-quickhelp-mode 1)
