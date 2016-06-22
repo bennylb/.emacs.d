@@ -40,7 +40,7 @@
   (if (daemonp)
       (call-process-shell-command "/usr/bin/systemctl --user restart emacs &")
     (message "%s" "No daemon running")
-      ))
+    ))
 
 (defun stop-systemd-emacs ()
   "Stop emacs systemd daemon"
@@ -114,13 +114,13 @@
   (if (> (length (window-list)) 2)
       (error "Can't toggle with more than 2 windows!")
     (let ((func (if (window-full-height-p)
-                    #'split-window-vertically
-                  #'split-window-horizontally)))
+		    #'split-window-vertically
+		  #'split-window-horizontally)))
       (delete-other-windows)
       (funcall func)
       (save-selected-window
-        (other-window 1)
-        (switch-to-buffer (other-buffer))))))
+	(other-window 1)
+	(switch-to-buffer (other-buffer))))))
 
 
 ;;; Formatting
