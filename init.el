@@ -409,16 +409,34 @@
   :ensure t)
 
 (use-package company
-  :init
-  (add-hook 'after-init-hook 'global-company-mode)
+  :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (use-package company-quickhelp
-    :config (company-quickhelp-mode 1)
-    :ensure t)
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 0)
-  (setq completion-ignore-case t)
-  (global-set-key (kbd "C-,") 'company-complete-common)
+  (progn
+    (use-package company-quickhelp
+      :config (company-quickhelp-mode 1)
+      :ensure t)
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1)
+    (setq completion-ignore-case t)
+    ;; The following was taken from
+    ;; https://github.com/company-mode/company-mode/issues/94#issuecomment-40884387
+    (define-key company-mode-map [remap indent-for-tab-command]
+      'company-indent-for-tab-command)
+
+    (setq tab-always-indent 'complete)
+
+    (defvar completion-at-point-functions-saved nil)
+
+    (defun company-indent-for-tab-command (&optional arg)
+      (interactive "P")
+      (let ((completion-at-point-functions-saved completion-at-point-functions)
+	    (completion-at-point-functions '(company-complete-common-wrapper)))
+	(indent-for-tab-command arg)))
+
+    (defun company-complete-common-wrapper ()
+      (let ((completion-at-point-functions completion-at-point-functions-saved))
+	(company-complete-common)))
+    )
   :ensure t)
 
 (use-package auto-complete
@@ -429,8 +447,23 @@
 (defun toggle-completion-mode ()
   "Toggle/switch/swap from company to auto-complete mode"
   (interactive)
-  (company-mode -1)
-  (auto-complete-mode 1))
+  (if (company-mode)
+      (progn
+	(company-mode -1)
+	(auto-complete-mode 1))
+    (if (auto-complete-mode)
+	(progn
+	  (auto-complete-mode -1)
+	  (company-mode 1)))))
+
+;; (if (company-mode)
+;;     (message "company-mode is enabled."))
+
+;; (symbol-value company-mode)
+;; (symbol-value auto-complete-mode)
+;;  ;;(auto-complete-mode -1)
+;; (company-mode 1)
+
 
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
