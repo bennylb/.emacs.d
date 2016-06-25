@@ -416,8 +416,8 @@
     :config (company-quickhelp-mode 1)
     :ensure t)
   (setq company-idle-delay 0)
-  (setq company-auto-complete t)
   (setq company-minimum-prefix-length 0)
+  (setq completion-ignore-case t)
   (global-set-key (kbd "C-,") 'company-complete-common)
   :ensure t)
 
