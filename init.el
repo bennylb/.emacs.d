@@ -61,7 +61,6 @@
 (global-set-key [f9] 'toggle-menu-bar-mode-from-frame)
 
 (setq make-backup-files nil)
-;;(setq auto-save-default nil)
 
 (show-paren-mode 1)
 (column-number-mode 1)
@@ -289,7 +288,6 @@
   :ensure t)
 
 (use-package ibuffer
-  :defer t
   :bind ("C-x C-b" . ibuffer)
   :config (setq ibuffer-formats
 		'((mark modified read-only " "
@@ -307,10 +305,7 @@
   :defer t
   :config
   (progn (tramp-set-completion-function "ssh" '((tramp-parse-sconfig "/etc/ssh_config")
-						(tramp-parse-sconfig "~/.ssh/config")))
-	 ;; Workaround for helm, Usage: sudo:desktop:/path/to/privliged/file
-	 ;;(add-to-list 'tramp-default-proxies-alist '("\\`desktop\\'" "\\`root\\'" "/ssh:%h:")))
-	 ))
+						(tramp-parse-sconfig "~/.ssh/config")))))
 
 (use-package term
   :commands (term ansi-term)
@@ -319,7 +314,8 @@
     (add-hook 'term-mode-hook (lambda () (company-mode -1)))
     (defun autopair-mode-disable ()
       (autopair-mode -1))
-    (add-hook 'term-mode-hook 'autopair-mode-disable)))
+    (add-hook 'term-mode-hook 'autopair-mode-disable)
+    (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t)))))
 
 (use-package org
   :commands (org-mode org-agenda)
@@ -409,9 +405,6 @@
 (use-package yasnippet
   :defer t
   :init
-  (progn
-    (add-hook 'term-mode-hook
-	      (lambda () (setq yas-dont-activate t))))
   :config (yas-reload-all)
   :ensure t)
 
@@ -423,12 +416,13 @@
     :config (company-quickhelp-mode 1)
     :ensure t)
   (setq company-idle-delay 0)
-  ;;(define-key company-active-map (kbd "<tab>") (lambda () (interactive) (company-complete-common-or-cycle 1)))
-  ;;(define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1)))
+  (setq company-auto-complete t)
+  (setq company-minimum-prefix-length 0)
   (global-set-key (kbd "C-,") 'company-complete-common)
   :ensure t)
 
 (use-package auto-complete
+  :commands (auto-complete-mode global-auto-complete-mode)
   ;;:config (ac-config-default)
   :ensure t)
 
@@ -628,7 +622,7 @@
   :disabled t)
 
 (defvar my-custom-theme nil)
-(setq my-custom-theme 'material)
+(setq my-custom-theme 'monokai)
 
 (defun my-load-theme (frame)
   (select-frame frame)
