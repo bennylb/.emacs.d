@@ -194,12 +194,12 @@
 
 (use-package swiper
   :bind
-  (("C-s"		.	swiper))
+  (("C-s" . swiper))
   :init
   (use-package ivy
     :bind
-    (("C-c C-r"		.	ivy-resume)
-     ("<f6>"		.	ivy-resume)
+    (("C-c C-r"	. ivy-resume)
+     ("<f6>"	. ivy-resume)
      ;; TODO bind ‘C-M-n’ (‘ivy-next-line-and-call’)
      ;;("C-M-n"	.	ivy-next-line-and-call)
      )
@@ -215,15 +215,15 @@
     :ensure t)
   (use-package counsel
     :bind
-    (("M-x"		.	counsel-M-x)
-     ("C-x C-f"		.	counsel-find-file)
-     ("<f1> f"		.	counsel-describe-function)
-     ("<f1> v"		.	counsel-describe-variable)
-     ("<f1> l"		.	counsel-load-library)
-     ("<f2> i"		.	counsel-info-lookup-symbol)
-     ("<f2> u"		.	counsel-unicode-char)
-     ("C-c g"		.	counsel-git)
-     ("C-c j"		.	counsel-git-grep))
+    (("M-x"	. counsel-M-x)
+     ("C-x C-f"	. counsel-find-file)
+     ("<f1> f"	. counsel-describe-function)
+     ("<f1> v"	. counsel-describe-variable)
+     ("<f1> l"	. counsel-load-library)
+     ("<f2> i"	. counsel-info-lookup-symbol)
+     ("<f2> u"	. counsel-unicode-char)
+     ("C-c g"	. counsel-git)
+     ("C-c j"	. counsel-git-grep))
     :config
     (use-package counsel-projectile
       :commands counsel-projectile
@@ -235,12 +235,12 @@
   :init
   (helm-mode 1)
   :diminish helm-mode
-  :bind (("M-x"		.	helm-M-x)
-	 ("C-x C-f"	.	helm-find-files)
-	 ("C-x b"	.	helm-mini)
-	 ("M-y"		.	helm-show-kill-ring)
-	 ("C-x r b"	.	helm-filtered-bookmarks)
-	 )
+  :bind
+  (("M-x"	. helm-M-x)
+   ("C-x C-f"	. helm-find-files)
+   ("C-x b"	. helm-mini)
+   ("M-y"	. helm-show-kill-ring)
+   ("C-x r b"	. helm-filtered-bookmarks))
   :config
   (progn
     (require 'helm-config)
@@ -479,8 +479,8 @@
   :ensure t)
 
 (use-package auto-highlight-symbol
-  :bind (("<f3>"		.	ahs-forward)
-	 ("S-<f3>"		.	ahs-backward))
+  :bind (("<f3>"   . ahs-forward)
+	 ("S-<f3>" . ahs-backward))
   :ensure t)
 
 (use-package spaceline
@@ -547,7 +547,7 @@
   :disabled t)
 
 (use-package web-mode
-  :mode (("\\.php\\'" . web-mode)
+  :mode (("\\.php\\'"  . web-mode)
 	 ("\\.html\\'" . web-mode))
   :config
   (progn
