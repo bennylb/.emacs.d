@@ -311,11 +311,9 @@
   :commands (term ansi-term)
   :config
   (progn
-    (add-hook 'term-mode-hook (lambda () (company-mode -1)))
     (defun autopair-mode-disable ()
       (autopair-mode -1))
-    (add-hook 'term-mode-hook 'autopair-mode-disable)
-    (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t)))))
+    (add-hook 'term-mode-hook 'autopair-mode-disable)))
 
 (use-package org
   :commands (org-mode org-agenda)
