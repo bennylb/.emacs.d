@@ -402,20 +402,22 @@
 
 (use-package yasnippet
   :defer t
-  :init
   :config (yas-reload-all)
   :ensure t)
 
 (use-package company
-  :init (add-hook 'after-init-hook 'global-company-mode)
+  :init
+  (setq company-global-modes '(not term-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
   :config
   (progn
     (use-package company-quickhelp
       :config (company-quickhelp-mode 1)
       :ensure t)
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1)
+    (setq company-idle-delay 1)
+    (setq company-minimum-prefix-length 3)
     (setq completion-ignore-case t)
+    (setq company-tooltip-align-annotations t)
     ;; The following was taken from
     ;; https://github.com/company-mode/company-mode/issues/94#issuecomment-40884387
     (define-key company-mode-map [remap indent-for-tab-command]
