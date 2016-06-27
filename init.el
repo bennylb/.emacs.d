@@ -521,7 +521,7 @@
       (eval-after-load 'company
 	'(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
       (add-hook 'irony-mode-hook #'yas-minor-mode)
-      (company-irony-ignore-case t)
+      (setq company-irony-ignore-case t)
       :ensure t)
     (defun my-irony-mode-hook ()
       (define-key irony-mode-map [remap completion-at-point]
