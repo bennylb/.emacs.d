@@ -584,38 +584,36 @@
   :mode "\\.js\\'"
   :commands js2-mode
   :config
-  (progn
-    (add-hook 'js2-mode-hook #'yas-minor-mode)
-    (use-package tern
+  (add-hook 'js2-mode-hook #'yas-minor-mode)
+  (use-package tern
+    :config
+    (add-hook 'js2-mode-hook 'tern-mode-enable)
+    (use-package company-tern
       :config
-      (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-      (use-package company-tern
-	:config
-	(add-to-list 'company-backends 'company-tern)
-	(setq company-tooltip-align-annotations t)
-	:ensure t)
-      (use-package tern-auto-complete
-	:config
-	(defun ac-tern ()
-	  (add-hook 'js-mode-hook 'toggle-completion-mode)
-	  (eval-after-load 'tern
-	    '(progn
-	       (require 'tern-auto-complete)
-	       (tern-ac-setup))))
-	(ac-tern)
-	:disabled t)
+      (add-to-list 'company-backends 'company-tern)
       :ensure t)
-    (use-package js2-refactor
+    (use-package tern-auto-complete
       :config
-      (add-hook 'js2-mode-hook #'js2-refactor-mode)
-      (js2r-add-keybindings-with-prefix "C-c C-m")
-      (use-package discover-js2-refactor
-	:ensure t)
+      (defun ac-tern ()
+	(add-hook 'js-mode-hook 'toggle-completion-mode)
+	(eval-after-load 'tern
+	  '(progn
+	     (require 'tern-auto-complete)
+	     (tern-ac-setup))))
+      (ac-tern)
+      :disabled t)
+    :ensure t)
+  (use-package js2-refactor
+    :config
+    (add-hook 'js2-mode-hook #'js2-refactor-mode)
+    (js2r-add-keybindings-with-prefix "C-c C-m")
+    (use-package discover-js2-refactor
       :ensure t)
-    (use-package js2-highlight-vars
-      :config
-      (add-hook 'js2-mode-hook 'js2-highlight-vars-mode)
-      :disabled t))
+    :ensure t)
+  (use-package js2-highlight-vars
+    :config
+    (add-hook 'js2-mode-hook 'js2-highlight-vars-mode)
+    :disabled t)
   :ensure t)
 
 (use-package skewer-mode
