@@ -313,7 +313,7 @@
   (progn
     (defun autopair-mode-disable ()
       (autopair-mode -1))
-    (add-hook 'term-mode-hook 'autopair-mode-disable)))
+    (add-hook 'term-mode-hook #'autopair-mode-disable)))
 
 (use-package org
   :commands (org-mode org-agenda)
@@ -388,7 +388,7 @@
   :diminish (autopair-mode)
   :config
   (progn
-    (add-hook 'prog-mode-hook 'autopair-mode))
+    (add-hook 'prog-mode-hook #'autopair-mode))
   :ensure t)
 
 (use-package expand-region
@@ -397,7 +397,7 @@
 
 (use-package rainbow-delimiters
   :commands rainbow-delimiters-mode
-  :init (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  :init (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   :ensure t)
 
 (use-package yasnippet
@@ -408,7 +408,7 @@
 (use-package company
   :init
   (setq company-global-modes '(not term-mode))
-  (add-hook 'after-init-hook 'global-company-mode)
+  (add-hook 'after-init-hook #'global-company-mode)
   :config
   (progn
     (use-package company-quickhelp
@@ -490,7 +490,7 @@
       :ensure t)
     (require 'spaceline-config)
     (spaceline-emacs-theme)
-    (add-hook 'Info-mode-hook 'spaceline-info-mode))
+    (add-hook 'Info-mode-hook #'spaceline-info-mode))
   :ensure t)
 
 (use-package magit
@@ -506,7 +506,7 @@
   ;; Once installed install clang via distro package manager and
   ;; then run irony-irony-install-server.
   :commands (irony-mode)
-  :init (add-hook 'c-mode-hook 'irony-mode)
+  :init (add-hook 'c-mode-hook #'irony-mode)
   :config
   (progn
     (use-package flycheck-irony
@@ -528,13 +528,13 @@
 	'irony-completion-at-point-async)
       (define-key irony-mode-map [remap complete-symbol]
 	'irony-completion-at-point-async))
-    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+    (add-hook 'irony-mode-hook #'my-irony-mode-hook)
+    (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options))
   :ensure t)
 
 (use-package elpy
   :commands (elpy-mode)
-  :init (add-hook 'python-mode-hook 'elpy-mode)
+  :init (add-hook 'python-mode-hook #'elpy-mode)
   :config
   (progn
     (use-package pyvenv
@@ -558,8 +558,8 @@
     (defun my-web-mode-hook ()
       (setq web-mode-markup-indent-offset 2)
       (setq web-mode-code-indent-offset 4))
-    (add-hook 'web-mode-hook 'my-web-mode-hook)
-    (add-hook 'web-mode-hook 'toggle-completion-mode)
+    (add-hook 'web-mode-hook #'my-web-mode-hook)
+    (add-hook 'web-mode-hook #'toggle-completion-mode)
     )
   :ensure t)
 
@@ -569,7 +569,7 @@
   :config
   (progn
     (add-hook 'java-mode-hook #'yas-minor-mode)
-    (add-hook 'java-mode-hook 'eclim-mode)
+    (add-hook 'java-mode-hook #'eclim-mode)
     (use-package eclim
       :config
       ;; Swap the following to change
@@ -587,7 +587,7 @@
   (add-hook 'js2-mode-hook #'yas-minor-mode)
   (use-package tern
     :config
-    (add-hook 'js2-mode-hook 'tern-mode-enable)
+    (add-hook 'js2-mode-hook #'tern-mode-enable)
     (use-package company-tern
       :config
       (add-to-list 'company-backends 'company-tern)
@@ -595,7 +595,7 @@
     (use-package tern-auto-complete
       :config
       (defun ac-tern ()
-	(add-hook 'js-mode-hook 'toggle-completion-mode)
+	(add-hook 'js-mode-hook #'toggle-completion-mode)
 	(eval-after-load 'tern
 	  '(progn
 	     (require 'tern-auto-complete)
@@ -612,7 +612,7 @@
     :ensure t)
   (use-package js2-highlight-vars
     :config
-    (add-hook 'js2-mode-hook 'js2-highlight-vars-mode)
+    (add-hook 'js2-mode-hook #'js2-highlight-vars-mode)
     :disabled t)
   :ensure t)
 
@@ -646,7 +646,7 @@
   :init
   (progn
     (add-hook 'TeX-mode-hook #'yas-minor-mode)
-    (add-hook 'TeX-mode-hook 'company-mode))
+    (add-hook 'TeX-mode-hook #'company-mode))
   :config (use-package company-auctex
 	    :config (company-auctex-init)
 	    :ensure t)
@@ -664,7 +664,7 @@
   (load-theme my-custom-theme t))
 
 (if (daemonp)
-    (add-hook 'after-make-frame-functions 'my-load-theme)
+    (add-hook 'after-make-frame-functions #'my-load-theme)
   (load-theme my-custom-theme t))
 
 (use-package leuven-theme
