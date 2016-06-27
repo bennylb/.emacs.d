@@ -503,6 +503,8 @@
   :ensure t)
 
 (use-package irony
+  ;; Once installed install clang via distro package manager and
+  ;; then run irony-irony-install-server.
   :commands (irony-mode)
   :init (add-hook 'c-mode-hook 'irony-mode)
   :config
