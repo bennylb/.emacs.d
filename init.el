@@ -668,39 +668,39 @@
   (load-theme my-custom-theme t))
 
 (use-package leuven-theme
-  :defer t
+  :commands leuven
   :ensure t)
 
 (use-package material-theme
-  :defer t
+  :commands (material material-light)
   :ensure t)
 
 (use-package monokai-theme
-  :defer t
+  :commands monokai
   :ensure t)
 
 (use-package aurora-theme
-  :defer t
+  :commands aurora
   :ensure t)
 
 (use-package spacemacs-theme
-  :defer t
+  :commands (spacemacs-dark spacemacs-light)
   :ensure t)
 
 (use-package badwolf-theme
-  :defer t
+  :commands badwolf
   :ensure t)
 
 (use-package soothe-theme
-  :defer t
+  :commands soothe
   :ensure t)
 
 (use-package flatland-theme
-  :defer t
+  :commands flatland
   :ensure t)
 
 (use-package gruvbox-theme
-  :defer t
+  :commands gruvbox
   :ensure t)
 
 (use-package pdf-tools
