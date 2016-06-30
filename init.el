@@ -38,9 +38,8 @@
   (save-some-buffers)
   (delete-frame)
   (if (daemonp)
-      (call-process-shell-command "/usr/bin/systemctl --user restart emacs &")
-    (message "%s" "No daemon running")
-    ))
+      ;; TODO
+    (message "%s" "No daemon running")))
 
 (defun stop-systemd-emacs ()
   "Stop emacs systemd daemon"
