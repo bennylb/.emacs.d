@@ -204,13 +204,12 @@
      )
     :init (ivy-mode 1)
     :config
-    (progn
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-height 15)
-      (setq ivy-count-format "(%d/%d) ")
-      (setq projectile-completion-system 'ivy)
-      (use-package ivy-hydra
-	:ensure t))
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-height 15)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq projectile-completion-system 'ivy)
+    (use-package ivy-hydra
+      :ensure t)
     :ensure t)
   (use-package counsel
     :bind
