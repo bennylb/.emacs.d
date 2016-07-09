@@ -401,6 +401,10 @@
   :init (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   :ensure t)
 
+(use-package browse-kill-ring
+  :bind ("M-y" . browse-kill-ring)
+  :ensure t)
+
 (use-package yasnippet
   :defer t
   :config (yas-reload-all)
