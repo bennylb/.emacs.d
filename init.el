@@ -662,14 +662,9 @@
   :disabled t)
 
 (defvar my-custom-theme nil)
-(setq my-custom-theme 'monokai)
 
 (defun my-load-theme (frame)
   (select-frame frame)
-  (load-theme my-custom-theme t))
-
-(if (daemonp)
-    (add-hook 'after-make-frame-functions #'my-load-theme)
   (load-theme my-custom-theme t))
 
 (use-package leuven-theme
@@ -707,6 +702,12 @@
 (use-package gruvbox-theme
   :commands gruvbox
   :ensure t)
+
+(setq my-custom-theme 'monokai)
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'my-load-theme)
+  (load-theme my-custom-theme t))
 
 (use-package pdf-tools
   :if (eq system-type 'gnu/linux)
