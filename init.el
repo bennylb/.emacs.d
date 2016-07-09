@@ -136,6 +136,9 @@
 
 ;;; Use-package management configuration
 
+(unless (file-exists-p "~/.emacs.d/elpa/")
+  (make-directory "~/.emacs.d/elpa/" "~/.emacs.d/"))
+
 (let ((default-directory "~/.emacs.d/elpa/"))
   (normal-top-level-add-subdirs-to-load-path))
 
