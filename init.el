@@ -505,6 +505,15 @@
   :ensure t
   :pin melpa-stable)
 
+(use-package flycheck-checkbashisms
+  ;; On Debian based distros install checkbashisms dependency with
+  ;; sudo apt-get install devscripts.
+  ;; On Arch Linux checkbashisms dependency can ben installed from
+  ;; the AUR.
+  :ensure t
+  :config
+  (flycheck-checkbashisms-setup))
+
 (use-package gitignore-mode
   :commands gitignore-mode
   :ensure t)
