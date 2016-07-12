@@ -363,6 +363,7 @@
   :ensure t)
 
 (use-package flycheck
+  :commands (flycheck-mode global-flycheck-mode)
   :ensure t
   :init
   (setq flycheck-global-modes '(sh-mode shell-script-mode))
@@ -497,6 +498,7 @@
   :pin melpa-stable)
 
 (use-package flycheck-checkbashisms
+  :commands sh-mode
   ;; On Debian based distros install checkbashisms dependency with
   ;; sudo apt-get install devscripts.
   ;; On Arch Linux checkbashisms dependency can ben installed from
