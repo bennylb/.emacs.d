@@ -123,15 +123,6 @@
 
 ;;; Formatting
 
-(setq c-default-style "linux")
-;;; Trying to insert space instead of tabs
-;;; with the following settings was exhibiting
-;;; strange behaviour so they're unset untill
-;;; I can find a better solution.
-;;(setq-default indent-tabs-mode nil)
-;;(setq-default tab-width 4)
-;;(setq-default indent-line-function 'insert-tab)
-;;(setq tab-stop-list (number-sequence 4 200 4))
 
 
 ;;; Use-package management configuration
