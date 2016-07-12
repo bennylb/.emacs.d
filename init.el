@@ -372,10 +372,12 @@
   :ensure t)
 
 (use-package flycheck
-  :commands (flycheck-mode)
-  :init (add-hook 'c-mode-hook #'flycheck-mode)
-  ;;:config (add-hook 'after-init-hook #'global-flycheck-mode)
-  :ensure t)
+  :ensure t
+  :init
+  (setq flycheck-global-modes '(sh-mode shell-script-mode))
+  (add-hook 'sh-mode-hook #'flycheck-mode)
+  ;;(setq global-flycheck-mode t)
+  )
 
 (use-package paredit
   :commands #'enable-paredit-mode
