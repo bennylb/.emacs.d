@@ -493,8 +493,8 @@
   :ensure t)
 
 (use-package auto-highlight-symbol
-  :bind (("<f3>"   . ahs-forward)
-	 ("S-<f3>" . ahs-backward))
+  :bind (("<f5>"   . ahs-forward)
+	 ("S-<f5>" . ahs-backward))
   :ensure t)
 
 (use-package spaceline
