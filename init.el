@@ -202,6 +202,8 @@
     (setq ivy-height 15)
     (setq ivy-count-format "(%d/%d) ")
     (setq projectile-completion-system 'ivy)
+    (setq ivy-use-ignore-default t)
+    (setq ivy-ignore-buffers '("^\\*PKGBUILD.*\\*"))
     (use-package ivy-hydra
       :ensure t)
     :ensure t)
