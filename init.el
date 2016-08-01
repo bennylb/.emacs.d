@@ -273,13 +273,16 @@
   :init (diminish 'abbrev-mode)
   :ensure t)
 
-(use-package dired-subtree
+(use-package dired
   :config
-  (eval-after-load 'dired '(define-key dired-mode-map (kbd "i") 'dired-subtree-toggle))
-  ;;(eval-after-load 'dired+ '(define-key dired-mode-map (kbd "i") 'dired-subtree-toggle))
-  ;;(add-hook 'dired-mode (lambda () (local-set-key (kbd "i") 'dired-subtree-toggle)))
-  ;;(add-hook 'dired+ (lambda () (local-set-key (kbd "i") 'dired-subtree-toggle)))
-  :ensure t)
+  (setq dired-recursive-deletes 'always)
+  (use-package dired-subtree
+    :config
+    (eval-after-load 'dired '(define-key dired-mode-map (kbd "i") 'dired-subtree-toggle))
+    ;;(eval-after-load 'dired+ '(define-key dired-mode-map (kbd "i") 'dired-subtree-toggle))
+    ;;(add-hook 'dired-mode (lambda () (local-set-key (kbd "i") 'dired-subtree-toggle)))
+    ;;(add-hook 'dired+ (lambda () (local-set-key (kbd "i") 'dired-subtree-toggle)))
+    :ensure t))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer)
