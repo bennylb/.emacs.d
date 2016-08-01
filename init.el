@@ -656,6 +656,9 @@
 
 (use-package pkgbuild-mode
   :mode ("\\PKGBUILD\\'" . pkgbuild-mode)
+  :config
+  (setq pkgbuild-user-full-name "Ben L Backhouse")
+  (setq pkgbuild-user-mail-address "ben.l.backhouse at gmail dot com")
   :ensure t)
 
 (use-package shackle
