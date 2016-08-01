@@ -726,7 +726,7 @@
   :commands gruvbox
   :ensure t)
 
-(setq my-custom-theme 'monokai)
+(setq my-custom-theme 'material)
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions #'my-load-theme)
