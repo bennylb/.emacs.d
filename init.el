@@ -376,20 +376,30 @@
   ;;(setq global-flycheck-mode t)
   )
 
+(use-package smartparens
+  :config
+  (add-hook 'sh-mode-hook #'smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-mode)
+  (define-key smartparens-mode-map (kbd "C-<right>") #'sp-forward-slurp-sexp)
+  (define-key smartparens-mode-map (kbd "C-<left>") #'sp-forward-barf-sexp)
+  (define-key smartparens-mode-map (kbd "C-M-<left>") #'sp-backward-slurp-sexp)
+  (define-key smartparens-mode-map (kbd "C-M-<right>") #'sp-backward-barf-sexp)
+  :ensure t)
+
 (use-package paredit
   :commands #'enable-paredit-mode
   :init
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode)
-  :ensure t)
+  :disabled t)
 
 (use-package autopair
   :diminish (autopair-mode)
   :config
   (progn
     (add-hook 'prog-mode-hook #'autopair-mode))
-  :ensure t)
+  :disabled t)
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region)
