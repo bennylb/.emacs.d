@@ -527,33 +527,34 @@
   :ensure t)
 
 (use-package irony
-  ;; Once installed install clang via distro package manager and
-  ;; then run irony-irony-install-server.
+  ;; Once installed, install clang and cmake via distro package manager
+  ;; and run irony-install-server.
   :commands (irony-mode)
-  :init (add-hook 'c-mode-hook #'irony-mode)
+  :init
+  (add-hook 'c-mode-hook #'irony-mode)
+  (add-hook 'c++-mode-hook #'irony-mode)
   :config
-  (progn
-    (use-package flycheck-irony
-      :config
-      (eval-after-load 'flycheck
-	'(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  (use-package flycheck-irony
+    :config
+    (eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+    :ensure t)
+  (use-package company-irony
+    :config
+    (use-package company-irony-c-headers
       :ensure t)
-    (use-package company-irony
-      :config
-      (use-package company-irony-c-headers
-	:ensure t)
-      (eval-after-load 'company
-	'(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
-      (add-hook 'irony-mode-hook #'yas-minor-mode)
-      (setq company-irony-ignore-case t)
-      :ensure t)
-    (defun my-irony-mode-hook ()
-      (define-key irony-mode-map [remap completion-at-point]
-	'irony-completion-at-point-async)
-      (define-key irony-mode-map [remap complete-symbol]
-	'irony-completion-at-point-async))
-    (add-hook 'irony-mode-hook #'my-irony-mode-hook)
-    (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options))
+    (eval-after-load 'company
+      '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
+    (add-hook 'irony-mode-hook #'yas-minor-mode)
+    (setq company-irony-ignore-case t)
+    :ensure t)
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook #'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
   :ensure t)
 
 (use-package elpy
