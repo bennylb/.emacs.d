@@ -341,13 +341,11 @@
 
   (setq org-src-fontify-natively t))
 
-(use-package ace-jump-mode
-  :bind ("C-." . ace-jump-mode)
-  :ensure t)
-
-(use-package ace-window
-  :bind ("C-x o" . ace-window)
-  :disabled t)
+(use-package avy
+  :ensure t
+  :config
+  (avy-setup-default)
+  :bind (("C-;" . avy-goto-char)))
 
 (use-package switch-window
   :bind ("C-x o" . switch-window)
