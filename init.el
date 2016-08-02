@@ -204,6 +204,16 @@
     (setq projectile-completion-system 'ivy)
     (setq ivy-use-ignore-default t)
     (setq ivy-ignore-buffers '("^\\*PKGBUILD.*\\*"))
+    (ivy-set-actions
+     'ivy-switch-buffer
+     '(("k"
+        (lambda (x)
+          (kill-buffer x)
+          (ivy--reset-state ivy-last))
+        "kill")
+       ("j"
+        ivy--switch-buffer-other-window-action
+        "other window"))))
     (use-package ivy-hydra
       :ensure t)
     :ensure t)
